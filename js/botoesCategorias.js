@@ -25,7 +25,6 @@ function filtrarPorCategoria(filtro) {
 function atualizarEstadosDosBotoes(categoriaSelecionada) {
   botoesCategorias.forEach((botao) => {
     const botaoFoiSelecionado = botao.getAttribute("name") === categoriaSelecionada;
-
-    botao.classList.toggle("selecionado", botaoFoiSelecionado);
+    botao.setAttribute("aria-selected", botaoFoiSelecionado);
   })
 }
