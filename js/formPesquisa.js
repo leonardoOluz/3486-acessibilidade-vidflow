@@ -2,6 +2,10 @@ const formPesquisa = document.querySelector('.form__pesquisa');
 
 formPesquisa.addEventListener('submit', (evento) => {
   evento.preventDefault();
+
+  const primeiroVideo = document.querySelector('.videos__item:not(.escondido) > iframe');
+  primeiroVideo.focus();
+
 });
 
 const barraDePesquisa = document.querySelector(".pesquisar__input");
