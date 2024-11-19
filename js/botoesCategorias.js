@@ -1,4 +1,5 @@
 const botoesCategorias = document.querySelectorAll(".botao-categoria");
+const tablist = document.querySelector('[role="tablist"]');
 
 botoesCategorias.forEach((botao) => {
   botao.addEventListener("click", () => {
@@ -7,6 +8,8 @@ botoesCategorias.forEach((botao) => {
     filtrarPorCategoria(categoriaSelecionada);
     atualizarEstadosDosBotoes(categoriaSelecionada);
   });
+
+  botao.addEventListener("keydown", mudarFocoPorTeclado);
 });
 
 function associarPainel(categoriaSelecionada) {
@@ -18,17 +21,39 @@ function filtrarPorCategoria(filtro) {
   const videos = document.querySelectorAll(".videos__item");
 
   for (const video of videos) {
-    const categoria = video.querySelector(".categoria").textContent.toLowerCase();
+    const categoria = video
+      .querySelector(".categoria")
+      .textContent.toLowerCase();
     const valorFiltro = filtro.toLowerCase();
 
-    const mostrarVideo = valorFiltro === 'tudo' || categoria.includes(valorFiltro);
+    const mostrarVideo =
+      valorFiltro === "tudo" || categoria.includes(valorFiltro);
 
     video.classList.toggle("escondido", !mostrarVideo);
   }
 }
 function atualizarEstadosDosBotoes(categoriaSelecionada) {
   botoesCategorias.forEach((botao) => {
-    const botaoFoiSelecionado = botao.getAttribute("name") === categoriaSelecionada;
+    const botaoFoiSelecionado =
+      botao.getAttribute("name") === categoriaSelecionada;
     botao.setAttribute("aria-selected", botaoFoiSelecionado);
-  })
+  });
+}
+
+function mudarFocoPorTeclado(evento) {
+  const botaoAtual = evento.target;
+
+  if (evento.key === "ArrowRight") {
+    if (tablist.lastElementChild === botaoAtual) {
+      tablist.firstElementChild.focus();
+    } else {
+      botaoAtual.nextElementSibling.focus();
+    }
+  } else if(evento.key === "ArrowLeft") {
+    if (tablist.firstElementChild === botaoAtual) {
+      tablist.lastElementChild.focus();
+    } else {
+      botaoAtual.previousElementSibling.focus();
+    }
+  }
 }
