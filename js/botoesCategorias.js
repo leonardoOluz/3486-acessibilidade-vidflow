@@ -42,18 +42,34 @@ function atualizarEstadosDosBotoes(categoriaSelecionada) {
 
 function mudarFocoPorTeclado(evento) {
   const botaoAtual = evento.target;
+  let novoBotao = null;
 
-  if (evento.key === "ArrowRight") {
-    if (tablist.lastElementChild === botaoAtual) {
-      tablist.firstElementChild.focus();
-    } else {
-      botaoAtual.nextElementSibling.focus();
-    }
-  } else if(evento.key === "ArrowLeft") {
-    if (tablist.firstElementChild === botaoAtual) {
-      tablist.lastElementChild.focus();
-    } else {
-      botaoAtual.previousElementSibling.focus();
-    }
+  switch (evento.key) {
+    case "ArrowRight":
+      evento.preventDefault();
+      if (botaoAtual === tablist.lastElementChild) {
+        novoBotao = tablist.firstElementChild;
+      } else {
+        novoBotao = botaoAtual.nextElementSibling;
+      }
+      break;
+    case "ArrowLeft":
+      evento.preventDefault();
+      if (botaoAtual === tablist.firstElementChild) {
+        novoBotao = tablist.lastElementChild;
+      } else {
+        novoBotao = botaoAtual.previousElementSibling;
+      }
+      break;
+    case "Home":
+      novoBotao = tablist.firstElementChild;
+      break;
+    case "End":
+      novoBotao = tablist.lastElementChild;
+      break;
   }
+  novoBotao.focus();
+  novoBotao.scrollIntoView({
+    behavior: "smooth",
+  });
 }
